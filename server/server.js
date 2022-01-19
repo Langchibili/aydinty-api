@@ -3,8 +3,6 @@ const mongoose = require("mongoose"); // mongoose
 const cors = require("cors");  // cors
 const app = express();  // express aspp
 const session = require('express-session')// express-session
-const session_secret = require("./utilities/secrets/secrets").session_secret; // sms secret
-const access_token = require("./utilities/secrets/secrets").access_token; // sms secret
 const bodyParser = require("body-parser"); // body parser 
 const expressLimit = require("express-limit").limit;
 const MongoDBStore = require('connect-mongodb-session')(session); // connect-mongodb-session 
@@ -40,13 +38,6 @@ const env_config = require('../env_config');
 env_config.config() // load NODE_ENVIRONMENTAL variables
 //routes requires endline
 
-//constants
-// const rootdirectory = require("./utilities/constants/rootdirectory");
-// const static_folder_name = require("./utilities/constants/static_folder_name");
-// const sessions_db_url = require("./utilities/constants/sessions_db_url");
-// const db_url = require("./utilities/constants/db_url");
-// const api = require("./utilities/constants/api");
-
 // get the environmental variables
 const PORT = process.env.PORT || 1000; 
 const SESSION_BD_URI = process.env.SESSION_BD_URI
@@ -72,7 +63,7 @@ const server = app.listen(PORT,()=>{
       store.removeAllListeners();
     })
 });
-
+console.log(ROOTPATH)
 server.timeout = 60 * 60 * 1000;
 server.keepAliveTimeout = 60 * 60 * 1000;
 server.headersTimeout = 60 * 60 * 1000;

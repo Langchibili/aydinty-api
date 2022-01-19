@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const date =  require('date-and-time');
-// const API_URL = require("../utilities/constants/API_URL");
 const docApiConcatinator = require("../functions").docApiConcatinator;
 const now = new Date();
 const API_URL = process.env.API_URL

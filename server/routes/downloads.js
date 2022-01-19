@@ -9,8 +9,9 @@ const getActedOnPost = require("../functions").getActedOnPost;
 const getActedOnPostsById = require("../functions").getActedOnPostsById;
 const downloads = require("../database/downloads").downloads;
 const execQuery = require("../database/connection").aydinty.runQuery;
-const rootdirectory = require("../utilities/constants/rootdirectory");
-const static_folder_name = require("../utilities/constants/static_folder_name");
+const ROOTPATH =  process.env.ROOTPATH 
+const STATIC_FOLDER_NAME = process.env.STATIC_FOLDER_NAME
+
 // GET REQUESTS
 
 /* get all downloads */
@@ -44,7 +45,7 @@ router.get("/download",(req,res,next)=>{
       else if(type === "attachment"){
          subPath = "attachements/";
       }
-      const downloadDir = rootdirectory + '/files/'+subPath+filename;
+      const downloadDir = ROOTPATH + STATIC_FOLDER_NAME+subPath+filename;
       // send download response, meaning, download the file
       res.download(downloadDir, filename)
       
