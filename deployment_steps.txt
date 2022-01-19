@@ -1,0 +1,10 @@
+#steps to deploying api
+#1: go to github and fork api repository then make the forked repository private
+#2: copy env_development.js varible configuration code and paste it into 
+    env_production.js and edit the env_production to mirror the production 
+    environmental variables
+#3: edit the .env file, set the NODE_ENV variable to "production"
+#4: comment out deployment_steps.txt and env_production.js from .gitingnore
+#5: set git origin to new private repository - like: git add remote private <url>
+#6: push changes to the private repository using a personal access_token
+#7: set up production environment then clone app to environment and run node
