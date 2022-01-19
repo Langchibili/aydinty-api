@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const date =  require('date-and-time');
-const api = require("../utilities/constants/api");
+// const API_URL = require("../utilities/constants/API_URL");
 const docApiConcatinator = require("../functions").docApiConcatinator;
 const now = new Date();
+const API_URL = process.env.API_URL
 
 //user schema
 const userSchema = new mongoose.Schema({
@@ -92,10 +93,10 @@ const userSchema = new mongoose.Schema({
     verified:Boolean,
     label: String,
     picture: {
-      cover: { type: String, default : "/files/images/blankcover.jpg" },
-      medium: { type: String, default : "/files/images/blankprofile.png" },
-      thumbnail: { type: String, default : "/files/images/blankprofile.png" },
-      small: { type: String, default : "/files/images/blankprofile.png"}     
+      cover: { type: String, default : "/images/blankcover.jpg" },
+      medium: { type: String, default : "/images/blankprofile.png" },
+      thumbnail: { type: String, default : "/images/blankprofile.png" },
+      small: { type: String, default : "/images/blankprofile.png"}     
     },
     following: [String],
     followers: [String],
@@ -225,7 +226,7 @@ module.exports.users = {
                  /* GET ALL USERS FROM DATABASE*/
                   getUsers: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
                     if(!arrayOfIds){
-                      return await docApiConcatinator(api, null, await userModel.find({},fields,function (err, docs) {
+                      return await docApiConcatinator(API_URL, null, await userModel.find({},fields,function (err, docs) {
                           if (err){
                               throw err;
                           }
@@ -233,7 +234,7 @@ module.exports.users = {
                        }).sort(sortObject).limit(limit));
                       }
                       else{
-                        return await docApiConcatinator(api, null, await userModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
+                        return await docApiConcatinator(API_URL, null, await userModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
                           if (err){
                               throw err;
                           }
@@ -243,7 +244,7 @@ module.exports.users = {
 
                   },
                   getUsersByIdsInverse: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(api, null, await userModel.find({ _id : { $nin : arrayOfIds } },fields,function (err, docs) {
+                    return await docApiConcatinator(API_URL, null, await userModel.find({ _id : { $nin : arrayOfIds } },fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
@@ -260,7 +261,7 @@ module.exports.users = {
                         username = username.toLowerCase(); // change username to lowercase first
                         filterObject = { username: username };
                     }
-                    return await docApiConcatinator(api, await userModel.findOne(filterObject, fields, function (err, doc) {
+                    return await docApiConcatinator(API_URL, await userModel.findOne(filterObject, fields, function (err, doc) {
                         if (err){
                             throw err;
                         }
@@ -328,7 +329,7 @@ module.exports.users = {
                 } ,
                 searchUser: async function(keyword, fields=null, limit=null){
                   keyword = keyword.toLowerCase();
-                  return await docApiConcatinator(api, null, await postModel.find({ ["tags"] : keyword },fields,function (err, docs) {
+                  return await docApiConcatinator(API_URL, null, await postModel.find({ ["tags"] : keyword },fields,function (err, docs) {
                     if (err){
                         throw err;
                     }

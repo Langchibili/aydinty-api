@@ -34,24 +34,37 @@ const ratingsRouter = require("./routes/ratings");
 const sharesRouter = require("./routes/shares");
 const trashRouter = require("./routes/trash");
 const searchRouter = require("./routes/search");
+const dotenv = require('dotenv');
+dotenv.config(); // load environmental variables
+const env_config = require('../env_config');
+env_config.config() // load NODE_ENVIRONMENTAL variables
 //routes requires endline
 
 //constants
-const rootdirectory = require("./utilities/constants/rootdirectory");
-const static_folder_name = require("./utilities/constants/static_folder_name");
-const sessions_db_url = require("./utilities/constants/sessions_db_url");
-const db_url = require("./utilities/constants/db_url");
-const api = require("./utilities/constants/api");
+// const rootdirectory = require("./utilities/constants/rootdirectory");
+// const static_folder_name = require("./utilities/constants/static_folder_name");
+// const sessions_db_url = require("./utilities/constants/sessions_db_url");
+// const db_url = require("./utilities/constants/db_url");
+// const api = require("./utilities/constants/api");
+
+// get the environmental variables
+const PORT = process.env.PORT || 1000; 
+const SESSION_BD_URI = process.env.SESSION_BD_URI
+const SESSION_DB_COLLECTION = process.env.SESSION_DB_COLLECTION
+const NODE_ENV = process.env.NODE_ENV
+const SESSION_SECRET = process.env.SESSION_SECRET
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN
+const ROOTPATH =  process.env.ROOTPATH 
+const STATIC_FOLDER_NAME = process.env.STATIC_FOLDER_NAME
+
 require('events').EventEmitter.prototype._maxListeners = 1000000;
 
-const PORT = process.env.PORT || 1000; //port
-
 /* create a sessions store*/
-const store = new MongoDBStore({uri: sessions_db_url, collection: "sessions"})
+const store = new MongoDBStore({uri: SESSION_BD_URI, collection: SESSION_DB_COLLECTION})
 
 // SEVER RUNNING ON ENVIRONMENT PORT OR 1000
 const server = app.listen(PORT,()=>{
-    console.log("api server running on port "+PORT);
+    console.log("api running on a "+NODE_ENV+" environment, on port "+PORT);
     store.on("open",()=>{
       console.log("session database connection established");
     })
@@ -92,7 +105,7 @@ app.use(cors(corsOptions));
 
 // create a session 
 app.use(session({
-  secret: session_secret,
+  secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   unset: 'destroy',
@@ -102,18 +115,18 @@ app.use(session({
     httpOnly: false, 
     maxAge: Date.now() + (30 * 86400 * 1000)
   },
-  name: 'session cookie name',
+  name: 'session cookie for aydinty',
 }));
   /* CHECK FOR ACCESS TOKEN, IMPORTANT SECURITY MEASURE */
 app.use(function(req,res,next){
-    if(req.path.startsWith("/files")){ // go next if req is for static files
+    if(req.path.startsWith("/public")){ // go next if req is for static files
       next();
     }
     if(!req.query.hasOwnProperty("access_token")){
        return res.status(403).send("forbidden");
     }
     const req_access_token = req.query.access_token;
-    if(req_access_token !== access_token){
+    if(req_access_token !== ACCESS_TOKEN){
       return res.status(403).send("forbidden");
     }
     next();
@@ -155,7 +168,7 @@ app.use(bodyParser.json({
   },
 }));
 /* static folder */
-app.use(express.static(rootdirectory+static_folder_name));
+app.use(express.static(ROOTPATH+STATIC_FOLDER_NAME));
 
 /* secured headers */
 app.use(helmet());
