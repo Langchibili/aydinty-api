@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const date =  require('date-and-time');
-const api = require("../utilities/constants/api");
-const docApiConcatinator = require("../functions").docApiConcatinator; // adds current api to uris
+// const API_URL = require("../utilities/constants/API_URL");
+const docApiConcatinator = require("../functions").docApiConcatinator; // adds current API_URL to uris
 const now = new Date();
+
+const API_URL = process.env.API_URL
 
 //post schema
 const postSchema = new mongoose.Schema({
@@ -78,10 +80,10 @@ const postSchema = new mongoose.Schema({
 			thumbnail:{
                   size:  { type: Number },
                   user_id: { type: String },
-                  cover: { type: String, default : "/files/images/blankthumbnail-full-width.jpg" },
-                  medium: { type: String, default : "/files/images/blankthumbnail-mid-width.png" },
-                  thumbnail: { type: String, default : "/files/images/blankthumbnail-thumb-width.png" },
-                  small: { type: String, default : "/files/images/blankthumbnail-small-width.png"},
+                  cover: { type: String, default : "/images/blankthumbnail-full-width.jpg" },
+                  medium: { type: String, default : "/images/blankthumbnail-mid-width.png" },
+                  thumbnail: { type: String, default : "/images/blankthumbnail-thumb-width.png" },
+                  small: { type: String, default : "/images/blankthumbnail-small-width.png"},
                   cover_big: { type: String },
                   cover_xl: { type: String },
                   type: { type: String },
@@ -173,7 +175,7 @@ module.exports.posts = {
                  /* GET ALL POSTS FROM DATABASE*/
                  getPosts: async function(fields=null,limit=null,arrayOfIds=null, sortObject={_id: -1}){
                     if(!arrayOfIds){
-                      return await docApiConcatinator(api, null, await postModel.find({},fields,function (err, docs) {
+                      return await docApiConcatinator(API_URL, null, await postModel.find({},fields,function (err, docs) {
                           if (err){
                               throw err;
                           }
@@ -181,7 +183,7 @@ module.exports.posts = {
                        }).sort(sortObject).limit(limit));
                       }
                       else{
-                        return docApiConcatinator(api, null, await postModel.find({ _id : { $in : arrayOfIds } },fields, function (err, docs) {
+                        return docApiConcatinator(API_URL, null, await postModel.find({ _id : { $in : arrayOfIds } },fields, function (err, docs) {
                           if (err){
                               throw err;
                           }
@@ -191,7 +193,7 @@ module.exports.posts = {
 
                   },
                   getPostsByUserId: async function(userId=null, post_type="music", fields=null,limit=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(api, null, await postModel.find({ userId :userId, post_type: post_type},fields,function (err, docs) {
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ userId :userId, post_type: post_type},fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
@@ -200,7 +202,7 @@ module.exports.posts = {
                  },
 
                  getPostsByPostCount: async function(postId=null,count,fields=null,limit=null,sortObject={_id: -1}){
-                  return await docApiConcatinator(api, null, await postModel.find({ _id :postId},fields,function (err, docs) {
+                  return await docApiConcatinator(API_URL, null, await postModel.find({ _id :postId},fields,function (err, docs) {
                     if (err){
                         throw err;
                     }
@@ -208,7 +210,7 @@ module.exports.posts = {
                  }).sort(sortObject={counts: {[count]: -1}}).limit(limit));
                  },
                   getPostsByUserIds: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(api, null, await postModel.find({ userId : { $in : arrayOfIds } },fields,function (err, docs) {
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ userId : { $in : arrayOfIds } },fields,function (err, docs) {
                           if (err){
                               throw err;
                           }
@@ -216,7 +218,7 @@ module.exports.posts = {
                        }).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getPostsByPostIds: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(api, null, await postModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
                           if (err){
                               throw err;
                           }
@@ -224,7 +226,7 @@ module.exports.posts = {
                        }).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getPostsByTypeAndUserIds: async function(fields=null,limit=null,arrayOfIds=null,post_type="music",sortObject={_id: -1}){
-                    return await docApiConcatinator(api, null, await postModel.find({ userId : { $in : arrayOfIds }, post_type: post_type },fields,function (err, docs) {
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ userId : { $in : arrayOfIds }, post_type: post_type },fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
@@ -232,7 +234,7 @@ module.exports.posts = {
                    }).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getPostsByType: async function(post_type, fields=null,limit=null, sortObject={_id: -1}){
-                    return await docApiConcatinator(api, null, await postModel.find({ post_type: post_type },fields,function (err, docs) {
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ post_type: post_type },fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
@@ -240,7 +242,7 @@ module.exports.posts = {
                    }).sort(sortObject).limit(limit));
                   },
                   getPostsByTypeAndTaxonomy: async function(post_type, taxonomy, taxonomyValue, fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(api, null, await postModel.find({ [taxonomy] : taxonomyValue, post_type: post_type },fields,function (err, docs) {
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ [taxonomy] : taxonomyValue, post_type: post_type },fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
@@ -255,7 +257,7 @@ module.exports.posts = {
                     else{
                       filterObject = { userName: username, [taxonomy] : taxonomyValue, post_type: post_type }
                     }
-                    return await docApiConcatinator(api, null, await postModel.find(filterObject,fields,function (err, docs) {
+                    return await docApiConcatinator(API_URL, null, await postModel.find(filterObject,fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
@@ -265,7 +267,7 @@ module.exports.posts = {
                   /* GET ONE POST FROM DATABASE*/
                   getPost: async function(postId,fields=null){
                     const filterObject = { _id: postId };
-                    return await docApiConcatinator(api, await postModel.findOne(filterObject, fields, function (err, doc) {
+                    return await docApiConcatinator(API_URL, await postModel.findOne(filterObject, fields, function (err, doc) {
                       if (err){
                           throw err;
                       }
@@ -303,7 +305,7 @@ module.exports.posts = {
                 /* DELETE A POST FROM DATABASE*/
                 searchPost: async function(keyword, fields=null, limit=null){
                   keyword = keyword.toLowerCase();
-                  return await docApiConcatinator(api, null, await postModel.find({ ["tags"] : keyword },fields,function (err, docs) {
+                  return await docApiConcatinator(API_URL, null, await postModel.find({ ["tags"] : keyword },fields,function (err, docs) {
                     if (err){
                         throw err;
                     }

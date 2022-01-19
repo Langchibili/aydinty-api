@@ -8,6 +8,7 @@
     "connect-timeout": "^1.9.0",
     "cors": "^2.8.5",
     "date-and-time": "^0.10.0",
+    "dotenv": "^14.2.0",
     "downloadjs": "^1.4.7",
     "express": "^4.17.1",
     "express-limit": "0.0.2",

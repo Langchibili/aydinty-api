@@ -1,1 +1,0 @@
-module.exports = "https://media.thenetworkzambia.com";

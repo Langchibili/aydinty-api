@@ -1,1 +1,0 @@
-module.exports = "mongodb+srv://langson:%40Devpassword007@cluster0.mp97e.mongodb.net/sessions?retryWrites=true&w=majority";

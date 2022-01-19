@@ -13,14 +13,12 @@
 
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-#/uploads/images/*
-/server/utilities/ffmpeg
-/server/utilities/constants/db_url.js
-/testserver.js
+#.env
+env_local.js
+# env_development.js 
+env_production.js
+deployment_steps.txt
+#/public/images/*
 
 npm-debug.log*
 yarn-debug.log*

@@ -8,9 +8,13 @@ const IncomingForm = require("formidable").IncomingForm;
 const imageResizer = require("../processes/image-processing").imageResizer;
 //const videoProcesser = require("../processes/video-processing");
 //constants
-const rootdirectory = require("../utilities/constants/rootdirectory");
-const static_folder_name = require("../utilities/constants/static_folder_name");
-const api_url = require("../utilities/constants/api");
+// const ROOTPATH = require("../utilities/constants/ROOTPATH");
+// const STATIC_FOLDER_NAME = require("../utilities/constants/STATIC_FOLDER_NAME");
+// const API_URL = require("../utilities/constants/api");
+
+const ROOTPATH =  process.env.ROOTPATH 
+const STATIC_FOLDER_NAME = process.env.STATIC_FOLDER_NAME
+const API_URL = process.env.API_URL
 
 /* UUID CODE*/
 const v1options = {
@@ -101,13 +105,13 @@ router.post("/", (req,res,next)=>{
          
          // // check if file is an audio file, then upload 
          // if(splitFileType[0] === "audio"){
-         //    file.path = rootdirectory + static_folder_name+'/files/tracks/' + fileName; 
+         //    file.path = ROOTPATH + STATIC_FOLDER_NAME+'/files/tracks/' + fileName; 
          //    file.uri_path =  '/files/tracks/' + fileName; 
          // }
 
          // // check if file is a video file, then upload 
          // else if(splitFileType[0] === "video"){
-         //    file.path = rootdirectory + static_folder_name+'/files/videos/' + fileName;
+         //    file.path = ROOTPATH + STATIC_FOLDER_NAME+'/files/videos/' + fileName;
          //    file.uri_path =  '/files/videos/' + fileName; 
          //    //videoProcesser.resizeVideo(file.path);
          //    // send you a response that the video has been uploaded, but is being processed, you will be notified when it's done
@@ -115,7 +119,7 @@ router.post("/", (req,res,next)=>{
          // }
          // check if file is an image file, then upload 
          /*else*/ if(splitFileType[0] === "image"){
-            file.path = rootdirectory + static_folder_name+'/files/images/' + fileName;
+            file.path = ROOTPATH + STATIC_FOLDER_NAME+'/files/images/' + fileName;
             file.uri_path =  '/files/images/'+fileName; 
          }
          
@@ -154,7 +158,7 @@ router.post("/", (req,res,next)=>{
       // else if(splitFileType[0] === "video"){
       //    // run video processing here and send response after done
       //    // generate thumails for video
-      //    const image = videoThumnaiGenerator.generateThumnail(file.path,rootdirectory+static_folder_name+'/files/images/',file.fileName);
+      //    const image = videoThumnaiGenerator.generateThumnail(file.path,ROOTPATH+STATIC_FOLDER_NAME+'/files/images/',file.fileName);
       //    let cover = image.image_uri_path;
       //    let medium = image.image_uri_path.replace("."+image.thumbExt, "-500-270."+image.thumbExt);
       //    let thumbnail = image.image_uri_path.replace("."+image.thumbExtt, "-160-155."+image.thumbExt);
