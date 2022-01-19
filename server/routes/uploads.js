@@ -8,9 +8,6 @@ const IncomingForm = require("formidable").IncomingForm;
 const imageResizer = require("../processes/image-processing").imageResizer;
 //const videoProcesser = require("../processes/video-processing");
 //constants
-// const ROOTPATH = require("../utilities/constants/ROOTPATH");
-// const STATIC_FOLDER_NAME = require("../utilities/constants/STATIC_FOLDER_NAME");
-// const API_URL = require("../utilities/constants/api");
 
 const ROOTPATH =  process.env.ROOTPATH 
 const STATIC_FOLDER_NAME = process.env.STATIC_FOLDER_NAME

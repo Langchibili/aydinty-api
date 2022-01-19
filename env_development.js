@@ -13,6 +13,6 @@ module.exports= {
         process.env.API_URL="http://localhost:1000"
         process.env.SESSION_SECRET= "72b95b39f53ddf4967a0d009792bf96f",
         process.env.ACCESS_TOKEN= "72b95b39f53ddf4967a0d009792bf96f"
-        process.env.ROOTPATH= "/c/user/user/"
+        process.env.ROOTPATH= __dirname
     }
 }

@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
-const db_url = require("../utilities/constants/db_url");
+const DB_URI = process.env.DB_URI
 
 
 // make connection function and run query function
 module.exports.aydinty = {
           runQuery: (query) => {
                         if(mongoose.connections.length < 2){
-                              mongoose.connect(db_url, {useNewUrlParser: true, poolSize: 1000, useUnifiedTopology: true });
+                              mongoose.connect(DB_URI, {useNewUrlParser: true, poolSize: 1000, useUnifiedTopology: true });
                         }
                          const db = mongoose.connection;
                          query();
@@ -26,7 +26,7 @@ module.exports.aydinty = {
                                db.removeAllListeners();
                          })
                          // db.on("close",()=>{
-                         // mongoose.connect(db_url, {useNewUrlParser: true, useUnifiedTopology: true });
+                         // mongoose.connect(DB_URI, {useNewUrlParser: true, useUnifiedTopology: true });
                          // });
                          process.on('SIGINT', function(){
                          mongoose.connection.close(function(){
