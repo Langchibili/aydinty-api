@@ -1,0 +1,26 @@
+{
+  "name": "aydinty-api",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-mongodb-session": "^2.3.2",
+    "connect-timeout": "^1.9.0",
+    "cors": "^2.8.5",
+    "date-and-time": "^0.10.0",
+    "downloadjs": "^1.4.7",
+    "express": "^4.17.1",
+    "express-limit": "0.0.2",
+    "express-session": "^1.17.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "formidable": "^1.2.1",
+    "generate-sms-verification-code": "^1.0.5",
+    "hash.js": "^1.1.7",
+    "helmet": "^3.22.0",
+    "jimp": "^0.16.1",
+    "mongoose": "^6.1.7",
+    "uuid": "^8.3.2"
+  },
+  "author": "Langson Chibili",
+  "license": "ISC"
+}
