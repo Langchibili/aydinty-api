@@ -48,11 +48,11 @@ router.post("/", (req,res,next)=>{
    //add to database object and sending response object 
    async function queryPlusResponse(){
       /*query runs here*/
-      if(!activityObject.userId){
+      if(!activityObject.hasOwnProperty("userId")){
         res.send([]);
       }
       else{
-        const getActivities = await activities.getActivitiesByUserId(activityObjectLimit.userId,"",activityObjectLimit);
+        const getActivities = await activities.getActivitiesByUserId(activityObject.userId,null,activityObjectLimit);
         /*response here*/
         
         res.send(getActivities);
