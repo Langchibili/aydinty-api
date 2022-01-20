@@ -9,6 +9,11 @@ const getActedOnPost = require("../functions").getActedOnPost;
 const getActedOnPostsById = require("../functions").getActedOnPostsById;
 const downloads = require("../database/downloads").downloads;
 const execQuery = require("../database/connection").aydinty.runQuery;
+const dotenv = require('dotenv');
+dotenv.config(); // load environmental variables
+const env_config = require('../../env_config');
+env_config.config() // load NODE_ENVIRONMENTAL variables
+
 const ROOTPATH =  process.env.ROOTPATH 
 const STATIC_FOLDER_NAME = process.env.STATIC_FOLDER_NAME
 

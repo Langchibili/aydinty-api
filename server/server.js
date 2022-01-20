@@ -55,7 +55,7 @@ const store = new MongoDBStore({uri: SESSION_BD_URI, collection: SESSION_DB_COLL
 
 // SEVER RUNNING ON ENVIRONMENT PORT OR 1000
 const server = app.listen(PORT,()=>{
-    console.log("api running on a "+NODE_ENV+" environment, on port "+PORT);
+    console.log("\x1b[36m api running on a \x1b[32m"+NODE_ENV+" \x1b[36m environment, on port \x1b[34m"+PORT+"\x1b[37m");
     store.on("open",()=>{
       console.log("session database connection established");
     })
@@ -108,15 +108,39 @@ app.use(session({
   },
   name: 'session cookie for aydinty',
 }));
+
+/* body parser */
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+app.use(bodyParser.json({
+  type: function(req) {
+      return req.get('content-type').indexOf('multipart/form-data') !== 0;
+  },
+}));
+// parse body here to check access_token from post requests
   /* CHECK FOR ACCESS TOKEN, IMPORTANT SECURITY MEASURE */
 app.use(function(req,res,next){
+    let req_access_token;
     if(req.path.startsWith("/public")){ // go next if req is for static files
       next();
     }
-    if(!req.query.hasOwnProperty("access_token")){
-       return res.status(403).send("forbidden");
+    // if a get request
+    if(req.method === "GET"){
+      const reqQuery = req.query;
+      if(!reqQuery.hasOwnProperty("access_token")){
+        return res.status(403).send("forbidden");
+      }
+      req_access_token =  reqQuery.access_token;
     }
-    const req_access_token = req.query.access_token;
+    // if a post request
+    if(req.method === "POST"){
+      const reqBody = req.body;
+      if(!reqBody.hasOwnProperty("access_token")){
+        return res.status(403).send("forbidden");
+      }
+      req_access_token =  reqBody.access_token;
+    }
+    // if access token is wrong, request is forbidden
     if(req_access_token !== ACCESS_TOKEN){
       return res.status(403).send("forbidden");
     }
@@ -150,14 +174,6 @@ app.get("/",(req,res,next)=>{
 });  
 
 
-/* body parser */
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-app.use(bodyParser.json({
-  type: function(req) {
-      return req.get('content-type').indexOf('multipart/form-data') !== 0;
-  },
-}));
 /* static folder */
 app.use(express.static(ROOTPATH+STATIC_FOLDER_NAME));
 

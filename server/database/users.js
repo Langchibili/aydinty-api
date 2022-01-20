@@ -5,6 +5,7 @@ const now = new Date();
 const API_URL = process.env.API_URL
 
 //user schema
+
 const userSchema = new mongoose.Schema({
     authentication:{
       type:  { 
@@ -41,7 +42,8 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     email: {
-        type: String
+      type: String,
+      required: true
     },
     password:{
       type: String,
@@ -224,31 +226,16 @@ const userModel = mongoose.model("users",userSchema,"users");
 module.exports.users = {
                  /* GET ALL USERS FROM DATABASE*/
                   getUsers: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    if(!arrayOfIds){
-                      return await docApiConcatinator(API_URL, null, await userModel.find({},fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).sort(sortObject).limit(limit));
+                   if(!arrayOfIds){
+                      return await docApiConcatinator(API_URL, null, await userModel.find({},fields).sort(sortObject).limit(limit));
                       }
                       else{
-                        return await docApiConcatinator(API_URL, null, await userModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).sort(sortObject).limit(limit));
+                        return await docApiConcatinator(API_URL, null, await userModel.find({ _id : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit));
                       }
 
                   },
                   getUsersByIdsInverse: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(API_URL, null, await userModel.find({ _id : { $nin : arrayOfIds } },fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                   }).sort(sortObject).limit(limit));
+                    return await docApiConcatinator(API_URL, null, await userModel.find({ _id : { $nin : arrayOfIds } },fields).sort(sortObject).limit(limit));
                   },
                   /* GET ONE USERS FROM DATABASE*/
                   getUser: async function(userId=null,username=null,fields=null){
@@ -260,12 +247,7 @@ module.exports.users = {
                         username = username.toLowerCase(); // change username to lowercase first
                         filterObject = { username: username };
                     }
-                    return await docApiConcatinator(API_URL, await userModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     }))
+                    return await docApiConcatinator(API_URL, await userModel.findOne(filterObject, fields))
             },
                 /* ADD A USER TO DATABASE AND RETURN SAVED OBJECT*/
                   addUser: async function(userObject){

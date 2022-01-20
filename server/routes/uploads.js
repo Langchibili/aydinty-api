@@ -8,6 +8,10 @@ const IncomingForm = require("formidable").IncomingForm;
 const imageResizer = require("../processes/image-processing").imageResizer;
 //const videoProcesser = require("../processes/video-processing");
 //constants
+const dotenv = require('dotenv');
+dotenv.config(); // load environmental variables
+const env_config = require('../../env_config');
+env_config.config() // load NODE_ENVIRONMENTAL variables
 
 const ROOTPATH =  process.env.ROOTPATH 
 const STATIC_FOLDER_NAME = process.env.STATIC_FOLDER_NAME

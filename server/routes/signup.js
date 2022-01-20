@@ -36,16 +36,16 @@ router.post("/", (req,res,next)=>{
       async function queryPlusResponse(){
           let response;
           let AddedUser; 
-          
-          if(userObject.hasOwnProperty("email")){
-               const invite = await invites.getInviteByEmail(email);
+
+          if(!userObject.hasOwnProperty("email")){
+               res.sendStatus(403)
+               res.end()
+          }
+          else{
+               const invite = await invites.getInviteByEmail(userObject.email);
                if(!invite){
                    res.send({error: "no invitation exists for provided email", errorType: "invitaion"})
                }
-          }
-          else{
-               res.sendStatus(403)
-               res.end()
           }
           
           if(userObject.authentication.type === "external"){
@@ -101,7 +101,7 @@ router.post("/", (req,res,next)=>{
                     else{
                          userObject.niceName = userObject.first_name + " "+ userObject.last_name;
                          response = await users.addUser(userObject);
-                         await invites.deleteInvite(email);
+                         await invites.deleteInvite(userObject.email);
                          const NewUser = response;
                          req.session.loggedInUser = NewUser; // log user in
                     }

@@ -30,41 +30,21 @@ module.exports.invites = {
                  /* GET ALL PLAYS FROM DATABASE*/
                  getInvites: async function(fields="",limit=null,arrayOfIds=null,sortObject={_id: -1}){
                   if(!arrayOfIds){
-                  return await inviteModel.find({},fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                  }).sort(sortObject).limit(limit);
+                  return await inviteModel.find({}).sort(sortObject).limit(limit);
                   }
                   else{
-                      return await inviteModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                  }).sort(sortObject).limit(limit);
+                      return await inviteModel.find({ _id : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit);
                   }
 
               },
               /* GET ALL PLAYS FROM DATABASE*/
                 getInviteByEmail: async function(email){
-                      return await inviteModel.find({ email : email },function (err, doc) {
-                      if (err){
-                          throw err;
-                      }
-                      return doc;
-                  });
+                      return await inviteModel.findOne({ user_email : email });
                 },
                   /* GET ONE PLAY FROM DATABASE*/
                   getInvite: async function(inviteId,fields=null){
                     const filterObject = { _id: inviteId };
-                    return await inviteModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await inviteModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A PLAY TO DATABASE AND RETURN SAVED OBJECT*/
