@@ -6,6 +6,7 @@ const categorySchema = new mongoose.Schema({
 		Link_name: String,
 		numberOfposts: Number,
 		category_thumnail: String,
+    posts: []
 });
 
 
