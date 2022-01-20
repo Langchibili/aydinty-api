@@ -109,13 +109,8 @@ const userSchema = new mongoose.Schema({
     viewed: [],
     plays: [],
     played: [],
-    downloads: [],
-    downloadedPosts: [],
     likedPosts: [],
     viewedPosts: [],
-    playedPosts: [],  
-    downloads: [],
-    downloaded: [],
     counts: {
       following: {
         type: Number,
@@ -133,27 +128,11 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
       } ,
-      downloads: {
-        type: Number,
-        default: 0
-      },
-      downloaded: {
-        type: Number,
-        default: 0
-      },
       likes: {
         type: Number,
         default: 0
       } ,
       liked: {
-        type: Number,
-        default: 0
-      },
-      plays: {
-        type: Number,
-        default: 0
-      } ,
-      played: {
         type: Number,
         default: 0
       },
@@ -192,7 +171,7 @@ const userSchema = new mongoose.Schema({
       numberOfposts: {
         type: Number,
         default: 0
-      } 
+      }
     },
     date:{
         uploadedDate: {

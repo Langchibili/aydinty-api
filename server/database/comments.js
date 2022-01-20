@@ -51,23 +51,13 @@ module.exports.comments = {
                  /* GET ALL COMMENTS FROM DATABASE*/
                   getComments: async function(postId, fields=null, limit=100, sortObject={_id: -1}){
                     filterBy={post_id: postId}
-                      return await commentModel.find(filterBy,fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).sort(sortObject).limit(limit);
+                      return await commentModel.find(filterBy,fields).sort(sortObject).limit(limit);
 
                   },
                   /* GET ONE COMMENT FROM DATABASE*/
                   getComment: async function(commentId, filterBy={}, fields=null){
                     const filterObject = { _id: commentId, ...filterBy};
-                    return await commentModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await commentModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A COMMENT TO DATABASE AND RETURN SAVED OBJECT*/

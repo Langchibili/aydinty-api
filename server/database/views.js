@@ -41,50 +41,25 @@ module.exports.views = {
                  /* GET ALL views FROM DATABASE*/
                  getViews: async function(fields="",limit=null,arrayOfIds=null,sortObject={_id: -1}){
                   if(!arrayOfIds){
-                  return await viewModel.find({},fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                  }).sort(sortObject).limit(limit);
+                  return await viewModel.find({},fields).sort(sortObject).limit(limit);
                   }
                   else{
-                      return await viewModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                  }).sort(sortObject).limit(limit);
+                      return await viewModel.find({ _id : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit);
                   }
 
               },
               getViewsByPostId: async function(fields="",limit=null,arrayOfIds=null, sortObject={_id: -1}){
-                return await viewModel.find({ post_id : { $in : arrayOfIds } },fields,function (err, docs) {
-                  if (err){
-                      throw err;
-                  }
-                  return docs;
-              }).sort(sortObject).limit(limit);
+                return await viewModel.find({ post_id : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit);
 
               },
             /* GET ALL PLAYS FROM DATABASE*/
               getViewsByUserIds: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await viewModel.find({ userId : { $in : arrayOfIds } },fields,function (err, docs) {
-                    if (err){
-                        throw err;
-                    }
-                    return docs;
-                }).sort(sortObject).sort('-date').limit(limit);
+                    return await viewModel.find({ userId : { $in : arrayOfIds } },fields).sort(sortObject).sort('-date').limit(limit);
               },
                   /* GET ONE View FROM DATABASE*/
                   getView: async function(viewId,fields=null){
                     const filterObject = { _id: viewId };
-                    return await viewModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await viewModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A View TO DATABASE AND RETURN SAVED OBJECT*/

@@ -10,23 +10,13 @@ const messageModel = mongoose.model("messages",messageSchema,"messages");
 module.exports.messages = {
                  /* GET ALL MESSAGES FROM DATABASE*/
                   getMessages: async function(fields=null,limit=100){
-                      return await messageModel.find({},fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).limit(limit);
+                      return await messageModel.find({},fields).limit(limit);
 
                   },
                   /* GET ONE MESSAGE FROM DATABASE*/
                   getMessage: async function(messageId,fields=null){
                     const filterObject = { _id: messageId };
-                    return await messageModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await messageModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A MESSAGE TO DATABASE AND RETURN SAVED OBJECT*/
