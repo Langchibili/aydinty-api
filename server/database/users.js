@@ -258,12 +258,7 @@ module.exports.users = {
                     return updated; // return number of updated docs
                   }
                   if(updateType === "pushInArray"){ 
-                   let arraysOfUsersObjects = await userModel.find({ _id : { $in : userIds } },fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                   });  // get the array of all the users' ids' objects and only get the specified fields
+                   let arraysOfUsersObjects = await userModel.find({ _id : { $in : userIds } },fields);  // get the array of all the users' ids' objects and only get the specified fields
                    
                    arraysOfUsersObjects.forEach(async function(element){ // loop through the array and update each users' objects by pusshing into the provide arrayName
                     userUpdateObject = {} // refleshing the userUpdateObject object

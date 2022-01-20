@@ -9,16 +9,15 @@ const API_URL = process.env.API_URL
 const postSchema = new mongoose.Schema({
       categorNames: [],
       userId: String,
-      postId: String,
       userName: String,
       userfullName: String,
 			type: {
                 type: String,
-                default: "social-post"
+                default: "post"
             },
 			post_type: {
                 type: String,
-                default: "social-post"
+                default: "text"
             },
 			status:{
                 type: String,
@@ -28,16 +27,24 @@ const postSchema = new mongoose.Schema({
                 type: String,
                 default: "public"
             },   
-			title:String,
-			title_short: String,
-      full_title: String,
-      dashed_title: String,
+			title:{
+        type: String,
+        default: "untitled"
+      },
+			title_short: {
+        type: String,
+        default: "untitled"
+     },
+      full_title: {
+        type: String,
+        default: "untitled"
+     },
+      dashed_title: {
+        type: String,
+        default: "untitled"
+     },
 			description: String,
 			short_description: String,
-      authorIsSongArtist: {
-        type: Boolean,
-        default: false
-      },
       author: {
           authorId: String,
           authorName: String,
@@ -221,7 +228,7 @@ module.exports.posts = {
                 },
                 /* ADD A POST TO DATABASE AND RETURN SAVED OBJECT*/
                   addPost: async function(postObject){
-                    let tagsString = postObject.artist.artistName+" "+postObject.title;
+                    let tagsString = postObject.author.authorName+" "+postObject.short_description;
                     tagsString = tagsString.toLowerCase();
                     tagsString = tagsString.replace(" - "," ");
                     tagsString = tagsString.replace("-"," ");
