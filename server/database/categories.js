@@ -15,23 +15,13 @@ const categoryModel = mongoose.model("categories",categorySchema,"categories");
 module.exports.categories = {
                  /* GET ALL CATEGORIES FROM DATABASE*/
                   getCategories: async function(fields=null,limit=100){
-                      return await categoryModel.find({},fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).limit(limit);
+                      return await categoryModel.find({},fields).limit(limit);
 
                   },
                   /* GET ONE CATEGORIES FROM DATABASE*/
                   getCategory: async function(categoryId,fields=null){
                     const filterObject = { _id: categoryId };
-                    return await categoryModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await categoryModel.findOne(filterObject, fields);
 
                 },
                 /* ADD A CATEGORY TO DATABASE AND RETURN SAVED OBJECT*/

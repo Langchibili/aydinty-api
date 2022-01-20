@@ -38,43 +38,23 @@ const likeSchema = new mongoose.Schema({
 const likeModel = mongoose.model("likes",likeSchema,"likes");
                 
 module.exports.likes = {
-                    getLikes: async function(fields="",limit=null,arrayOfIds=null,sortObject={_id: -1}){
+                  getLikes: async function(fields="",limit=null,arrayOfIds=null,sortObject={_id: -1}){
                         if(!arrayOfIds){
-                        return await likeModel.find({},fields,function (err, docs) {
-                            if (err){
-                                throw err;
-                            }
-                            return docs;
-                        }).sort(sortObject).limit(limit);
+                        return await likeModel.find({},fields).sort(sortObject).limit(limit);
                         }
                         else{
-                            return await likeModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
-                            if (err){
-                                throw err;
-                            }
-                            return docs;
-                        }).sort(sortObject).limit(limit);
+                            return await likeModel.find({ _id : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit);
                         }
 
                     },
                  /* GET ALL PLAYS FROM DATABASE*/
                    getLikesByUserIds: async function(fields=null,limit=null,arrayOfIds=null){
-                        return await likeModel.find({ userId : { $in : arrayOfIds } },fields,function (err, docs) {
-                        if (err){
-                            throw err;
-                        }
-                        return docs;
-                    }).sort(sortObject).limit(limit);
+                        return await likeModel.find({ userId : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit);
                   },
                   /* GET ONE PLAY FROM DATABASE*/
                   getLike: async function(likeId,fields=null){
                     const filterObject = { _id: likeId };
-                    return await likeModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await likeModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A PLAY TO DATABASE AND RETURN SAVED OBJECT*/

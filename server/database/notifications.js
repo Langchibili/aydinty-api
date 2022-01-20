@@ -54,32 +54,17 @@ module.exports.notifications = {
                  /* GET ALL NOTIFICATIONS FROM DATABASE*/
                  getNotifications: async function(fields=null,limit=null,arrayOfIds=null, sortObject={_id: -1}){
                   if(!arrayOfIds){
-                    return await notificationModel.find({},fields,function (err, docs) {
-                        if (err){
-                            throw err;
-                        }
-                        return docs;
-                     }).sort(sortObject).limit(limit);
+                    return await notificationModel.find({},fields).sort(sortObject).limit(limit);
                     }
                     else{
-                      return await notificationModel.find({ _id : { $in : arrayOfIds } },fields, function (err, docs) {
-                        if (err){
-                            throw err;
-                        }
-                        return docs;
-                     }).sort(sortObject).limit(limit);
+                      return await notificationModel.find({ _id : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit);
                     }
 
                 },
                   /* GET ONE NOTIFICATION FROM DATABASE*/
                   getNotification: async function(notificationId,fields=null){
                     const filterObject = { _id: notificationId };
-                    return await notificationModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await notificationModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A NOTIFICATION TO DATABASE AND RETURN SAVED OBJECT*/

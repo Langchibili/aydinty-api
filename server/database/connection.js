@@ -15,22 +15,11 @@ module.exports.aydinty = {
                          await query();
                          db.on('error', console.error.bind(console, 'connection error:'));
                          db.on('open', function() {
-                               process.removeAllListeners();
-                               // const qry = await
-                                  // run the query
-                                //db.close();
-                                
-                              // if(mongoose.connections.length > 2){
-                              //      await db.close();
-                              // }
-                              
+                               process.removeAllListeners(); 
                          });
                          db.on("data", function(){
                                db.removeAllListeners();
                          })
-                         // db.on("close",()=>{
-                         // mongoose.connect(DB_URI, {useNewUrlParser: true, useUnifiedTopology: true });
-                         // });
                          process.on('SIGINT', function(){
                          mongoose.connection.close(function(){
                          console.log("Mongoose default connection is disconnected due to application termination");

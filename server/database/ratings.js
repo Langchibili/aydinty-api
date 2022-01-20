@@ -10,23 +10,13 @@ const ratingModel = mongoose.model("ratings",ratingSchema,"ratings");
 module.exports.ratings = {
                  /* GET ALL RATINGS FROM DATABASE*/
                   getRatings: async function(fields=null,limit=100){
-                      return await ratingModel.find({},fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).limit(limit);
+                      return await ratingModel.find({},fields).limit(limit);
 
                   },
                   /* GET ONE RATING FROM DATABASE*/
                   getRating: async function(ratingId,fields=null){
                     const filterObject = { _id: ratingId };
-                    return await ratingModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await ratingModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A RATING TO DATABASE AND RETURN SAVED OBJECT*/

@@ -48,23 +48,13 @@ module.exports.replies = {
                  /* GET ALL REPLIES FROM DATABASE*/
                  getReplies: async function(commentId, fields=null, limit=100, sortObject={_id: -1}){
                   filterBy={comment_id: commentId}
-                    return await replyModel.find(filterBy,fields,function (err, docs) {
-                        if (err){
-                            throw err;
-                        }
-                        return docs;
-                     }).sort(sortObject).limit(limit);
+                    return await replyModel.find(filterBy,fields).sort(sortObject).limit(limit);
 
                 },
                   /* GET ONE REPLIES FROM DATABASE*/
                   getReply: async function(replyId,fields=null){
                     const filterObject = { _id: replyId };
-                    return await replyModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await replyModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A REPLY TO DATABASE AND RETURN SAVED OBJECT*/

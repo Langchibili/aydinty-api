@@ -48,51 +48,26 @@ module.exports.activities = {
                  /* GET ALL ACTIVTIES FROM DATABASE*/
                  getActivities: async function(fields=null,limit=null,arrayOfIds=null, sortObject={_id: -1}){
                   if(!arrayOfIds){
-                    return await activityModel.find({},fields,function (err, docs) {
-                        if (err){
-                            throw err;
-                        }
-                        return docs;
-                     }).sort(sortObject).limit(limit);
+                    return await activityModel.find({},fields).sort(sortObject).limit(limit);
                     }
                     else{
-                      return await activityModel.find({ _id : { $in : arrayOfIds } },fields, function (err, docs) {
-                        if (err){
-                            throw err;
-                        }
-                        return docs;
-                     }).sort(sortObject).limit(limit);
+                      return await activityModel.find({ _id : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit);
                     }
 
                 },
                 getActivitiesByUserId: async function(userId=null,fields=null,limit=null,arrayOfIds=null, sortObject={_id: -1}){
                   if(!arrayOfIds){
-                    return await activityModel.find({userId: userId},fields,function (err, docs) {
-                        if (err){
-                            throw err;
-                        }
-                        return docs;
-                     }).sort(sortObject).limit(limit);
+                    return await activityModel.find({userId: userId},fields).sort(sortObject).limit(limit);
                     }
                     else{
-                      return await activityModel.find({ userId : { $in : arrayOfIds } },fields, function (err, docs) {
-                        if (err){
-                            throw err;
-                        }
-                        return docs;
-                     }).sort(sortObject).limit(limit);
+                      return await activityModel.find({ userId : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit);
                     }
 
                 },
                   /* GET ONE ACTIVITY FROM DATABASE*/
                   getActivity: async function(activityId,fields=null){
                     const filterObject = { _id: activityId };
-                    return await activityModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await activityModel.findOne(filterObject, fields)
 
                 },
                 /* ADD AN ACTIVITY TO DATABASE AND RETURN SAVED OBJECT*/

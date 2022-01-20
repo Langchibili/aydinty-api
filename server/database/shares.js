@@ -10,23 +10,13 @@ const shareModel = mongoose.model("shares",shareSchema,"shares");
 module.exports.shares = {
                  /* GET ALL SHARES FROM DATABASE*/
                   getShares: async function(fields=null,limit=100){
-                      return await shareModel.find({},fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).limit(limit);
+                      return await shareModel.find({},fields).limit(limit);
 
                   },
                   /* GET ONE SHARE FROM DATABASE*/
                   getShare: async function(shareId,fields=null){
                     const filterObject = { _id: shareId };
-                    return await shareModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await shareModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A SHARE TO DATABASE AND RETURN SAVED OBJECT*/

@@ -61,23 +61,13 @@ const uploadModel = mongoose.model("uploads",uploadSchema,"uploads");
 module.exports.uploads = {
                  /* GET ALL UPLOADS FROM DATABASE*/
                   getUploads: async function(fields=null,limit=100){
-                      return await uploadModel.find({},fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).limit(limit);
+                      return await uploadModel.find({},fields).limit(limit);
 
                   },
                   /* GET ONE UPLOAD FROM DATABASE*/
                   getUpload: async function(uploadId,fields=null){
                     const filterObject = { _id: uploadId };
-                    return await uploadModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await uploadModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A UPLOAD TO DATABASE AND RETURN SAVED OBJECT*/

@@ -29,23 +29,13 @@ const repostModel = mongoose.model("reposts",repostSchema,"reposts");
 module.exports.reposts = {
                  /* GET ALL REPOSTS FROM DATABASE*/
                   getReposts: async function(fields=null,limit=100){
-                      return await repostModel.find({},fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).limit(limit);
+                      return await repostModel.find({},fields).limit(limit);
 
                   },
                   /* GET ONE REPOSTS FROM DATABASE*/
                   getRepost: async function(repostId,fields=null){
                     const filterObject = { _id: repostId };
-                    return await repostModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return await repostModel.findOne(filterObject, fields)
 
                 },
                 /* ADD A REPOST TO DATABASE AND RETURN SAVED OBJECT*/
