@@ -52,14 +52,13 @@ const notificationModel = mongoose.model("notifications",notificationSchema,"not
                 
 module.exports.notifications = {
                  /* GET ALL NOTIFICATIONS FROM DATABASE*/
-                 getNotifications: async function(fields=null,limit=null,arrayOfIds=null, sortObject={_id: -1}){
+                getNotifications: async function(fields=null,limit=null,arrayOfIds=null, sortObject={_id: -1}){
                   if(!arrayOfIds){
                     return await notificationModel.find({},fields).sort(sortObject).limit(limit);
                     }
                     else{
                       return await notificationModel.find({ _id : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit);
                     }
-
                 },
                   /* GET ONE NOTIFICATION FROM DATABASE*/
                   getNotification: async function(notificationId,fields=null){

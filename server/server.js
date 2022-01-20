@@ -132,7 +132,7 @@ app.use(function(req,res,next){
       req_access_token =  reqQuery.access_token;
     }
     // if a post request
-    if(req.method === "POST"){
+    if(req.method === "POST" || req.method === "DELETE" || req.method === "PUT"){
       const reqBody = req.body;
       if(!reqBody.hasOwnProperty("access_token")){
         return res.status(403).send("forbidden");
