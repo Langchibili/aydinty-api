@@ -30,8 +30,8 @@ router.get("/:email", (req,res,next)=>{
    //const requestObject = req.query;
    const email = req.params.email;
    async function queryPlusResponse(){
-       let invite = await invite.getInviteByEmail(email);  //get invite by email
-       res.send(invite);
+       const response = await invites.getInviteByEmail(email);  //get invite by email
+       res.send(response);
        
     }
     if(req.params.hasOwnProperty("email")){

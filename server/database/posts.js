@@ -174,79 +174,34 @@ module.exports.posts = {
                  /* GET ALL POSTS FROM DATABASE*/
                  getPosts: async function(fields=null,limit=null,arrayOfIds=null, sortObject={_id: -1}){
                     if(!arrayOfIds){
-                      return await docApiConcatinator(API_URL, null, await postModel.find({},fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).sort(sortObject).limit(limit));
+                      return await docApiConcatinator(API_URL, null, await postModel.find({},fields).sort(sortObject).limit(limit));
                       }
                       else{
-                        return docApiConcatinator(API_URL, null, await postModel.find({ _id : { $in : arrayOfIds } },fields, function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).sort(sortObject).limit(limit));
+                        return docApiConcatinator(API_URL, null, await postModel.find({ _id : { $in : arrayOfIds } },fields).sort(sortObject).limit(limit));
                       }
 
                   },
                   getPostsByUserId: async function(userId=null, post_type="music", fields=null,limit=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(API_URL, null, await postModel.find({ userId :userId, post_type: post_type},fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                   }).sort(sortObject={_id: -1}).limit(limit));
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ userId :userId, post_type: post_type},fields).sort(sortObject={_id: -1}).limit(limit));
                  },
 
                  getPostsByPostCount: async function(postId=null,count,fields=null,limit=null,sortObject={_id: -1}){
-                  return await docApiConcatinator(API_URL, null, await postModel.find({ _id :postId},fields,function (err, docs) {
-                    if (err){
-                        throw err;
-                    }
-                    return docs;
-                 }).sort(sortObject={counts: {[count]: -1}}).limit(limit));
+                  return await docApiConcatinator(API_URL, null, await postModel.find({ _id :postId},fields).sort(sortObject={counts: {[count]: -1}}).limit(limit));
                  },
                   getPostsByUserIds: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(API_URL, null, await postModel.find({ userId : { $in : arrayOfIds } },fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).sort(sortObject={_id: -1}).limit(limit));
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ userId : { $in : arrayOfIds } },fields).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getPostsByPostIds: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(API_URL, null, await postModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
-                          if (err){
-                              throw err;
-                          }
-                          return docs;
-                       }).sort(sortObject={_id: -1}).limit(limit));
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ _id : { $in : arrayOfIds } },fields).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getPostsByTypeAndUserIds: async function(fields=null,limit=null,arrayOfIds=null,post_type="music",sortObject={_id: -1}){
-                    return await docApiConcatinator(API_URL, null, await postModel.find({ userId : { $in : arrayOfIds }, post_type: post_type },fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                   }).sort(sortObject={_id: -1}).limit(limit));
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ userId : { $in : arrayOfIds }, post_type: post_type },fields).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getPostsByType: async function(post_type, fields=null,limit=null, sortObject={_id: -1}){
-                    return await docApiConcatinator(API_URL, null, await postModel.find({ post_type: post_type },fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                   }).sort(sortObject).limit(limit));
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ post_type: post_type },fields).sort(sortObject).limit(limit));
                   },
                   getPostsByTypeAndTaxonomy: async function(post_type, taxonomy, taxonomyValue, fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(API_URL, null, await postModel.find({ [taxonomy] : taxonomyValue, post_type: post_type },fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                   }).sort(sortObject={_id: -1}).limit(limit));
+                    return await docApiConcatinator(API_URL, null, await postModel.find({ [taxonomy] : taxonomyValue, post_type: post_type },fields).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getUserPostsByTypeAndTaxonomy: async function(post_type,taxonomy, taxonomyValue,userId=null,username=null,fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
                     let filterObject;
@@ -256,22 +211,12 @@ module.exports.posts = {
                     else{
                       filterObject = { userName: username, [taxonomy] : taxonomyValue, post_type: post_type }
                     }
-                    return await docApiConcatinator(API_URL, null, await postModel.find(filterObject,fields,function (err, docs) {
-                      if (err){
-                          throw err;
-                      }
-                      return docs;
-                   }).sort(sortObject={_id: -1}).limit(limit));
+                    return await docApiConcatinator(API_URL, null, await postModel.find(filterObject,fields).sort(sortObject={_id: -1}).limit(limit));
                   },
                   /* GET ONE POST FROM DATABASE*/
                   getPost: async function(postId,fields=null){
                     const filterObject = { _id: postId };
-                    return await docApiConcatinator(API_URL, await postModel.findOne(filterObject, fields, function (err, doc) {
-                      if (err){
-                          throw err;
-                      }
-                      
-                   }),[]);
+                    return await docApiConcatinator(API_URL, await postModel.findOne(filterObject, fields),[]);
 
                 },
                 /* ADD A POST TO DATABASE AND RETURN SAVED OBJECT*/

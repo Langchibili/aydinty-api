@@ -23,6 +23,7 @@ router.get("/", (req,res,next)=>{
           }
         }
         else{
+            if(limit === NaN) { limit = 0 }
             result = await users.getUsers(fields,limit);
         }   
         /*response here*/
