@@ -249,12 +249,7 @@ module.exports.posts = {
                 /* DELETE A POST FROM DATABASE*/
                 searchPost: async function(keyword, fields=null, limit=null){
                   keyword = keyword.toLowerCase();
-                  return await docApiConcatinator(API_URL, null, await postModel.find({ ["tags"] : keyword },fields,function (err, docs) {
-                    if (err){
-                        throw err;
-                    }
-                    return docs;
-                 }).sort(sortObject={_id: -1}).limit(limit));             
+                  return await docApiConcatinator(API_URL, null, await postModel.find({ ["tags"] : keyword },fields).sort(sortObject={_id: -1}).limit(limit));             
                 },
                 getByQuery: function(){
                      return;
