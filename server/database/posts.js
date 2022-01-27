@@ -249,7 +249,6 @@ module.exports.posts = {
                   deletePost: async function(postId){
                     return await postModel.findByIdAndDelete(postId, async function(err, doc) {
                       if(err) console.log(err);
-                      console.log("Successful deletion");
                       return doc
                     });
                   },

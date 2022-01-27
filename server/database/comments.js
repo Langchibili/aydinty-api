@@ -25,7 +25,10 @@ const commentSchema = new mongoose.Schema({
 					video_url: {type: String}
 			    }
 			},
-			numberOfreplies: Number,
+			numberOfreplies: {
+        type: Number,
+        default: 0
+      },
 			date:{
 				uploadedDate: {
                     type: String,

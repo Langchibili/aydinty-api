@@ -11,7 +11,7 @@ const replySchema = new mongoose.Schema({
         user_nice_name: String,
         user_url: String,
         user_name: String,	
-          reply_body: {
+        reply_body: {
           post_url: {type: String},
           body: {type: String},
           post_thumbnail: {type: String},
